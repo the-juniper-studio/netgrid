@@ -23,11 +23,10 @@ exports.handler =  async (event, context, callback) => {
     return `${k}: ${payload[k]}`
   }).join("<br><br>");
 
-  //cc: SENDGRID_CC_EMAIL,
-  //bcc: SENDGRID_BCC_EMAIL,
-
   const msg = {
     to: SENDGRID_TO_EMAIL,
+    cc: SENDGRID_CC_EMAIL,
+    bcc: SENDGRID_BCC_EMAIL,
     from: email,
     subject: subject ? subject : 'Contact Form Submission',
     html: body
@@ -35,16 +34,18 @@ exports.handler =  async (event, context, callback) => {
 
   console.log('msg', msg)
 
-  try{
+  try {
     await sgMail.send(msg)
     return {
       statusCode: 200,
       body: "Message sent"
     }
-  } catch(e){
-    return {
-      statusCode: e.code,
-      body: e.message
-    }
+  } catch (err) {
+    console.log('\n\nERROR SENDING EMAIL: ', err, '\n\n')
+    return callback(err.toString(), {
+      statusCode: 500,
+      body: err.toString(),
+      headers: {'Access-Control-Allow-Origin': GATSBY_SITE_URL }
+    })
   }
 };
