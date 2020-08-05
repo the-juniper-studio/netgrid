@@ -5,6 +5,7 @@ const {
   SENDGRID_TO_EMAIL,
   SENDGRID_CC_EMAIL,
   SENDGRID_BCC_EMAIL,
+  SENDGRID_SITE_URL
 } = process.env
 
 console.log('start')
@@ -38,17 +39,20 @@ exports.handler =  async (event, context, callback) => {
   console.log('msg', msg)
 
   try {
-    await sgMail.send(msg)
-    return {
+    return callback(null, {
+      headers: {'Access-Control-Allow-Origin': SENDGRID_SITE_URL },
       statusCode: 200,
-      body: "Message sent"
-    }
+      body: JSON.stringify({
+        status: 'Message sent',
+        recipient: email
+      })
+    })
   } catch (err) {
     console.log('\n\nERROR SENDING EMAIL: ', err, '\n\n')
     return callback(err.toString(), {
       statusCode: 500,
       body: err.toString(),
-      headers: {'Access-Control-Allow-Origin': GATSBY_SITE_URL }
+      headers: {'Access-Control-Allow-Origin': SENDGRID_SITE_URL }
     })
   }
 };
