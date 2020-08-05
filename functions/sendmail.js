@@ -4,7 +4,7 @@ const {
   SENDGRID_TO_EMAIL,
   SENDGRID_CC_EMAIL,
   SENDGRID_BCC_EMAIL,
-  SENDGRID_SITE_URL
+  SITE_URL
 } = process.env
 
 console.log('start')
@@ -33,17 +33,18 @@ exports.handler =  async (event, context, callback) => {
 
     const msg = {
       to: SENDGRID_TO_EMAIL,
-      cc: SENDGRID_CC_EMAIL,
+      cc: SENDGRID_CC_EMAIL email,
       bcc: SENDGRID_BCC_EMAIL,
-      from: email,
+      from: 'hello@thejuniperstudio.com',
       subject: subject ? subject : 'Contact Form Submission',
-      html: 'hello I am body'
+      html: body
     };
 
     console.log('msg', msg)
 
     const sendgrid = await sgMail.send(msg)
     console.log('sendgrid', sendgrid)
+
     return callback(null, {
       headers: {'Access-Control-Allow-Origin': SENDGRID_SITE_URL },
       statusCode: 200,
@@ -57,7 +58,7 @@ exports.handler =  async (event, context, callback) => {
     return callback(err.toString(), {
       statusCode: 500,
       body: err.toString(),
-      headers: {'Access-Control-Allow-Origin': SENDGRID_SITE_URL }
+      headers: {'Access-Control-Allow-Origin': SITE_URL }
     })
   }
 };
