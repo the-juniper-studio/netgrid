@@ -19,9 +19,12 @@ exports.handler =  async (event, context, callback) => {
 
   sgMail.setApiKey(SENDGRID_API_KEY)
 
+
   const body = Object.keys(payload).map((k) => {
     return `${k}: ${payload[k]}`
   }).join("<br><br>");
+
+  console.log('body', body)
 
   const msg = {
     to: SENDGRID_TO_EMAIL,
@@ -29,7 +32,7 @@ exports.handler =  async (event, context, callback) => {
     bcc: SENDGRID_BCC_EMAIL,
     from: email,
     subject: subject ? subject : 'Contact Form Submission',
-    html: body
+    html: 'hello I am body'
   };
 
   console.log('msg', msg)
