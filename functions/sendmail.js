@@ -33,7 +33,7 @@ exports.handler =  async (event, context, callback) => {
 
     const msg = {
       to: SENDGRID_TO_EMAIL,
-      cc: SENDGRID_CC_EMAIL email,
+      cc: email,
       bcc: SENDGRID_BCC_EMAIL,
       from: 'hello@thejuniperstudio.com',
       subject: subject ? subject : 'Contact Form Submission',
