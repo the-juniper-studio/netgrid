@@ -23,13 +23,14 @@ exports.handler =  async (event, context, callback) => {
     return `${k}: ${payload[k]}`
   }).join("<br><br>");
 
+  //cc: SENDGRID_CC_EMAIL,
+  //bcc: SENDGRID_BCC_EMAIL,
+
   const msg = {
     to: SENDGRID_TO_EMAIL,
-    cc: SENDGRID_CC_EMAIL,
-    bcc: SENDGRID_BCC_EMAIL,
     from: email,
     subject: subject ? subject : 'Contact Form Submission',
-    html: body,
+    html: body
   };
 
   console.log('msg', msg)
