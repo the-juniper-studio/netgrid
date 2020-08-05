@@ -1,11 +1,18 @@
-const sgMail = require('@sendgrid/mail')
-const { SENDGRID_API_KEY, SENDGRID_TO_EMAIL } = process.env
+const sgMail = require('@sendgrid/mail');
+require('dotenv').config()
+const {
+  SENDGRID_API_KEY,
+  SENDGRID_TO_EMAIL,
+  SENDGRID_CC_EMAIL,
+  SENDGRID_BCC_EMAIL,
+} = process.env
 
 console.log('start')
 
 exports.handler =  async (event, context, callback) => {
+  console.log('event', event)
   console.log('event body', event.body)
-  const payload = JSON.parse(event.body)
+  let payload = JSON.parse(event.body)
   console.log('payload', payload)
   const { email, subject } = payload
 
@@ -17,6 +24,8 @@ exports.handler =  async (event, context, callback) => {
 
   const msg = {
     to: SENDGRID_TO_EMAIL,
+    cc: SENDGRID_CC_EMAIL,
+    bcc: SENDGRID_BCC_EMAIL,
     from: email,
     subject: subject ? subject : 'Contact Form Submission',
     html: body,
