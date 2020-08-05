@@ -42,8 +42,8 @@ exports.handler =  async (event, context, callback) => {
 
     console.log('msg', msg)
 
-    await sgMail.send(msg)
-
+    const sendgrid = await sgMail.send(msg)
+    console.log('sendgrid', sendgrid)
     return callback(null, {
       headers: {'Access-Control-Allow-Origin': SENDGRID_SITE_URL },
       statusCode: 200,
