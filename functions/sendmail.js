@@ -12,7 +12,8 @@ console.log('start')
 exports.handler =  async (event, context, callback) => {
   console.log('event', event)
   console.log('event body', event.body)
-  let payload = event.queryStringParameters
+  //let payload = JSON.parse(event.body)
+  let payload = JSON.parse(event.queryStringParameters)
   console.log('payload', payload)
   const { email, subject } = payload
 
@@ -30,6 +31,8 @@ exports.handler =  async (event, context, callback) => {
     subject: subject ? subject : 'Contact Form Submission',
     html: body,
   };
+
+  console.log('msg', msg)
 
   try{
     await sgMail.send(msg)
