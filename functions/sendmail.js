@@ -46,7 +46,7 @@ exports.handler =  async (event, context, callback) => {
     console.log('sendgrid', sendgrid)
 
     return callback(null, {
-      headers: {'Access-Control-Allow-Origin': SENDGRID_SITE_URL },
+      headers: {'Access-Control-Allow-Origin': SITE_URL },
       statusCode: 200,
       body: JSON.stringify({
         status: 'Message sent',
